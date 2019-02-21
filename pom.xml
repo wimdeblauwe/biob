@@ -7,6 +7,8 @@
     <artifactId>biob</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>BIOB - Binary Object Storage</name>
+    <description>Java library to store binary objects</description>
+    <url>https://github.com/wimdeblauwe/biob</url>
     <properties>
         <java.version>1.8</java.version>
         <!-- Dependencies -->
@@ -20,7 +22,31 @@
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
         <jacoco-maven-plugin.version>0.8.3</jacoco-maven-plugin.version>
+        <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
+        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
     </properties>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Wim Deblauwe</name>
+            <email>wim.deblauwe@gmail.com</email>
+            <organizationUrl>https://github.com/wimdeblauwe</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <developerConnection>scm:git:git@github.com:wimdeblauwe/biob.git</developerConnection>
+        <connection>scm:git:git@github.com:wimdeblauwe/biob.git</connection>
+        <url>git@github.com:wimdeblauwe/biob.git</url>
+    </scm>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/wimdeblauwe/biob/issues</url>
+    </issueManagement>
     <dependencies>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -87,6 +113,32 @@
                         <configuration>
                             <propertyName>surefireArgLine</propertyName>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadoc</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
