@@ -61,7 +61,7 @@
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <!-- to get jacoco report we need to set argLine in surefire, without this snippet the jacoco argLine is lost -->
-                    <argLine>${argLine}</argLine>
+                    <argLine>${surefireArgLine}</argLine>
                 </configuration>
             </plugin>
             <plugin>
@@ -70,11 +70,23 @@
                 <version>${jacoco-maven-plugin.version}</version>
                 <executions>
                     <execution>
+                        <id>jacoco-prepare</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>jacoco-report</id>
                         <phase>verify</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
