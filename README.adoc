@@ -1,5 +1,7 @@
 = BIOB - Binary Object Repository
 
+image:https://travis-ci.org/wimdeblauwe/biob.svg?branch=master["Build Status", link="https://travis-ci.org/wimdeblauwe/biob"]
+
 == Goal
 
 The goal of this project is to make it easy to store binary data
@@ -172,6 +174,10 @@ purpose is testing.
 The `LocalFileSystemBinaryObjectStorage` will store the binary objects on the local filesystem.
 The generated path for each object that is stored will be relative to the `baseDir` that is passed at construction time.
 
+== Development
+
+* Builds are done on Travis: https://travis-ci.org/wimdeblauwe/biob
+* Code quality is available via SonarQube: https://sonarcloud.io/dashboard?id=biob
 
 
 
