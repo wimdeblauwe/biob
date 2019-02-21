@@ -1,0 +1,163 @@
+= BIOB - Binary Object Repository
+
+== Goal
+
+The goal of this project is to make it easy to store binary data
+alongside the entities that refer to them.
+
+For example:
+
+* An avatar image that is linked to the `User` entity
+* Attachments that are linked to an `Issue` in an issue tracker
+
+== Example Usage
+
+=== Basic setup
+
+The library is not tied to Spring Boot, but I will use some
+concepts of Spring Boot to explain it usage.
+
+Suppose you have the following `User` entity:
+
+[source]
+----
+@Entity
+public class User {
+
+  @Id
+  private Long id;
+  private String username;
+
+  // further details of class omitted...
+}
+----
+
+If you use Spring Data, you will have a repository to persist this
+in the database:
+
+[source,java]
+----
+public interface UserRepository extends CrudRepository<User, Long> {
+}
+----
+
+and most likely a `Service` that uses this repository:
+
+[source,java]
+----
+@Service
+@Transactional
+public class UserServiceImpl implements UserService {
+
+  private final UserRepository repository;
+
+  public UserServiceImpl(UserRepository repository) {
+    this.repository = repository;
+  }
+
+  public void createUser( String username ) {
+    repository.save( new User(null, username) );
+  }
+}
+----
+
+=== Extending the User entity
+
+We now extend the `User` class to store the avatar image of the user. However,
+we will not store binary file in the database, but only store a reference to
+the file in the database. The file itself will be stored in a `BinaryObjectStorage`
+implementation of which our library has various implementations available.
+
+The type of the reference in the entity can be any primitive or class you want. For
+this example, we will go for a simple `UUID`:
+
+[source]
+----
+@Entity
+public class User {
+
+  @Id
+  private Long id;
+  private String username;
+  private UUID avatarId;
+
+  // further details of class omitted...
+}
+----
+
+=== Adding a BinaryObjectRepository
+
+To store a binary file, we create an instance of `BinaryObjectRepository`:
+
+[source,java]
+----
+InMemoryBinaryObjectStorage storage = new InMemoryBinaryObjectStorage(); <1>
+BinaryObjectRepository<User, UUID> repository = new BinaryObjectRepository<>( <2>
+                                                    UUID::randomUUID, <3>
+                                                    (user, uuid) -> user.getId() + "/images/"
+                                                                    + uuid.toString(), <4>
+                                                    storage); <5>
+----
+<1> Creates in memory instance of `BinaryObjectStorage`
+<2> The `BinaryObjectRepository` needs 2 generic types. The first one is the type of the entity
+that the binary object is refered from (e.g. `User`). The second one is the type that is used by the reference
+itself (e.g. `UUID`).
+<3> The first argument is a function that generates a new object of the type of
+the reference. This this case, we generate a random `UUID`.
+<4> The second argument is a function that generates the path where the file should be stored. This
+path will be relative and interpreted by the `BinaryObjectStorage` implementation as they see fit.
+<5> The actual `BinaryObjectStorage` that will persist the file. This can be in memory, in a folder structure
+on disk, on an S3 bucket, ...
+
+=== Updating the UserService
+
+There are now 2 ways to use the `BinaryObjectRepository` in our service:
+
+* Inject the full `BinaryObjectRepository` instance into your service.
+* Inject the `BinaryObjectStorage` and create the `BinaryObjectRepository` in the constructor of your service.
+
+This is an example where we inject the backing storage in our service:
+
+[source,java]
+----
+@Service
+@Transactional
+public class UserServiceImpl implements UserService {
+
+  private final UserRepository repository;
+  private final BinaryObjectRepository objectRepository;
+
+  public UserServiceImpl(UserRepository repository,
+                         BinaryObjectStorage storage) {
+    this.repository = repository;
+    this.objectRepository = new BinaryObjectRepository<>( UUID::randomUUID, <1>
+                                                          (user, uuid) -> user.getId() + "/images/"
+                                                                          + uuid.toString(),
+                                                          storage);
+  }
+
+  public void createUser( String username, MultipartFile avatar ) {
+    User user = repository.save( new User(null, username) );
+
+    UUID avatarId = objectRepository.store( user, <2>
+                                            getMetadata(avatar),
+                                            avatar.getInputStream() );
+
+    user.setAvatarId( avatarId ); <3>
+  }
+
+  private BinaryObjectMetadata getMetadata(MultipartFile multipartFile) { <4>
+    return new BinaryObjectMetadata(multipartFile.getSize(),
+                                    multipartFile.getOriginalFilename(),
+                                    multipartFile.getContentType());
+  }
+}
+----
+<1> Create the `BinaryObjectRepository` in the constructor
+<2> Store the binary file. We assume it was uploaded as a `MultipartFile` via a `@Controller` for example.
+<3> Use the returned `avatarId` and set it on the entity so it is stored in the database along with the `User` entity.
+<4> The `store()` method also requires some metadata with is gathered in the `BinaryObjectMetadata` object.
+
+
+
+
