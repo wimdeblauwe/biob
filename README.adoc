@@ -158,6 +158,21 @@ public class UserServiceImpl implements UserService {
 <3> Use the returned `avatarId` and set it on the entity so it is stored in the database along with the `User` entity.
 <4> The `store()` method also requires some metadata with is gathered in the `BinaryObjectMetadata` object.
 
+== Backing storage implementations
+
+The project currently has the following backing storages implemented:
+
+=== In memory
+
+The `InMemoryBinaryObjectStorage` keeps all binary objects in memory. Its main
+purpose is testing.
+
+=== File based
+
+The `LocalFileSystemBinaryObjectStorage` will store the binary objects on the local filesystem.
+The generated path for each object that is stored will be relative to the `baseDir` that is passed at construction time.
+
+
 
 
 
