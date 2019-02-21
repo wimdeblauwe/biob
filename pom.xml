@@ -58,6 +58,10 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <!-- to get jacoco report we need to set argLine in surefire, without this snippet the jacoco argLine is lost -->
+                    <argLine>${argLine}</argLine>
+                </configuration>
             </plugin>
         </plugins>
     </build>
