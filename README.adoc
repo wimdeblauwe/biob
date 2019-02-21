@@ -1,6 +1,7 @@
 = BIOB - Binary Object Repository
 
 image:https://travis-ci.org/wimdeblauwe/biob.svg?branch=master["Build Status", link="https://travis-ci.org/wimdeblauwe/biob"]
+image:https://sonarcloud.io/api/project_badges/measure?project=org.wimdeblauwe%3Abiob&metric=coverage["Coverage", link="https://sonarcloud.io/dashboard?id=org.wimdeblauwe%3Abiob"]
 
 == Goal
 
@@ -177,7 +178,7 @@ The generated path for each object that is stored will be relative to the `baseD
 == Development
 
 * Builds are done on Travis: https://travis-ci.org/wimdeblauwe/biob
-* Code quality is available via SonarQube: https://sonarcloud.io/dashboard?id=biob
+* Code quality is available via SonarQube: https://sonarcloud.io/dashboard?id=org.wimdeblauwe%3Abiob
 
 
 
