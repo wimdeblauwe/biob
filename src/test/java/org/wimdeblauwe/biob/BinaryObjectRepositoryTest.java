@@ -31,6 +31,23 @@ class BinaryObjectRepositoryTest {
     }
 
     @Test
+    void testGetMetadata() {
+        InMemoryBinaryObjectStorage storage = new InMemoryBinaryObjectStorage();
+        BinaryObjectRepository<User, UUID> repository = new BinaryObjectRepository<>(UUID::randomUUID,
+                                                                                     (user, uuid) -> user
+                                                                                             .getId() + "/images/" + uuid
+                                                                                             .toString(),
+                                                                                     storage);
+        User user = new User(1L);
+        UUID id = repository.store(user,
+                                   createExampleMetadata(),
+                                   createExampleInputStream());
+        assertThat(repository.getMetadata(user, id)).hasValueSatisfying(binaryObjectMetadata -> {
+            assertThat(binaryObjectMetadata).isEqualTo(createExampleMetadata());
+        });
+    }
+
+    @Test
     void testHasBinaryObject() {
         InMemoryBinaryObjectStorage storage = new InMemoryBinaryObjectStorage();
         BinaryObjectRepository<User, UUID> repository = new BinaryObjectRepository<>(UUID::randomUUID,

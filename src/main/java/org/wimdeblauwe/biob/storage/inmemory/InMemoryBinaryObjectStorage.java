@@ -43,6 +43,16 @@ public class InMemoryBinaryObjectStorage implements BinaryObjectStorage {
     }
 
     @Override
+    public Optional<BinaryObjectMetadata> getMetadata(String filePath) {
+        InMemoryBinaryObject binaryObject = binaryObjects.get(filePath);
+        if (binaryObject != null) {
+            return Optional.of(binaryObject.getMetadata());
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
     public boolean hasBinaryObject(String filePath) {
         return binaryObjects.containsKey(filePath);
     }

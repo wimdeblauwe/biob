@@ -26,6 +26,10 @@ public class BinaryObjectRepository<E, T> {
         return storage.retrieve(binaryObjectIdToFilePathFunction.apply(entity, id));
     }
 
+    public Optional<BinaryObjectMetadata> getMetadata(E entity, T id) {
+        return storage.getMetadata(binaryObjectIdToFilePathFunction.apply(entity, id));
+    }
+
     public boolean hasBinaryObject(E entity, T id) {
         return storage.hasBinaryObject(binaryObjectIdToFilePathFunction.apply(entity, id));
     }

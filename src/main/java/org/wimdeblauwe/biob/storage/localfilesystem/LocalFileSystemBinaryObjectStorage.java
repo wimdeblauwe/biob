@@ -59,7 +59,23 @@ public class LocalFileSystemBinaryObjectStorage implements BinaryObjectStorage {
                 BinaryObjectMetadata metadata = loadMetadata(targetPath);
                 return Optional.of(new BinaryObject(inputStream, metadata));
             } catch (IOException e) {
-                throw new BinaryObjectStorageException("Unable to retrieve binary object at path " + targetPath, e);
+                throw new BinaryObjectStorageException(
+                        "Unable to retrieve binary object at path " + targetPath, e);
+            }
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<BinaryObjectMetadata> getMetadata(String filePath) {
+        Path targetPath = this.basePath.resolve(filePath);
+        if (targetPath.toFile().exists()) {
+            try {
+                BinaryObjectMetadata metadata = loadMetadata(targetPath);
+                return Optional.of(metadata);
+            } catch (IOException e) {
+                throw new BinaryObjectStorageException(
+                        "Unable to retrieve metadata for binary object at path " + targetPath, e);
             }
         }
         return Optional.empty();

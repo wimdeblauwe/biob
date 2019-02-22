@@ -8,6 +8,8 @@ public interface BinaryObjectStorage {
 
     Optional<BinaryObject> retrieve(String filePath);
 
+    Optional<BinaryObjectMetadata> getMetadata(String filePath);
+
     boolean hasBinaryObject(String filePath);
 
     void delete(String filePath);
