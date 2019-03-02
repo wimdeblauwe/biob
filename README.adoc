@@ -180,6 +180,19 @@ The generated path for each object that is stored will be relative to the `baseD
 * Builds are done on Travis: https://travis-ci.org/wimdeblauwe/biob
 * Code quality is available via SonarQube: https://sonarcloud.io/dashboard?id=org.wimdeblauwe%3Abiob
 
+== Deployment
 
+* SNAPSHOT versions are put on https://oss.sonatype.org/content/repositories/snapshots
+* All releases can be downloaded from https://oss.sonatype.org/content/groups/public
+
+== Release
+
+Release is done via the Maven Release Plugin:
+
+`mvn release:prepare`
+
+and
+
+`mvn release:perform`
 
 
