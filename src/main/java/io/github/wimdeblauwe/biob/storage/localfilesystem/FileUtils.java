@@ -1,4 +1,4 @@
-package org.wimdeblauwe.biob.storage.localfilesystem;
+package io.github.wimdeblauwe.biob.storage.localfilesystem;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;

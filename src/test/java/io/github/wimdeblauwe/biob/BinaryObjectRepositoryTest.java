@@ -1,7 +1,7 @@
-package org.wimdeblauwe.biob;
+package io.github.wimdeblauwe.biob;
 
 import org.junit.jupiter.api.Test;
-import org.wimdeblauwe.biob.storage.inmemory.InMemoryBinaryObjectStorage;
+import io.github.wimdeblauwe.biob.storage.inmemory.InMemoryBinaryObjectStorage;
 
 import java.io.ByteArrayInputStream;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package org.wimdeblauwe.biob;
+package io.github.wimdeblauwe.biob;
 
 public class BinaryObjectStorageException extends RuntimeException {
     public BinaryObjectStorageException(String message, Throwable cause) {

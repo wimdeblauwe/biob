@@ -1,10 +1,10 @@
-package org.wimdeblauwe.biob.storage.inmemory;
+package io.github.wimdeblauwe.biob.storage.inmemory;
 
 import com.google.common.io.ByteStreams;
-import org.wimdeblauwe.biob.BinaryObject;
-import org.wimdeblauwe.biob.BinaryObjectMetadata;
-import org.wimdeblauwe.biob.BinaryObjectStorage;
-import org.wimdeblauwe.biob.BinaryObjectStorageException;
+import io.github.wimdeblauwe.biob.BinaryObject;
+import io.github.wimdeblauwe.biob.BinaryObjectMetadata;
+import io.github.wimdeblauwe.biob.BinaryObjectStorage;
+import io.github.wimdeblauwe.biob.BinaryObjectStorageException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

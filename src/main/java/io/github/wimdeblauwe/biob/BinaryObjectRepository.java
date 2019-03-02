@@ -1,4 +1,4 @@
-package org.wimdeblauwe.biob;
+package io.github.wimdeblauwe.biob;
 
 import java.io.InputStream;
 import java.util.Optional;

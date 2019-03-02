@@ -1,26 +1,22 @@
-package org.wimdeblauwe.biob.storage.localfilesystem;
+package io.github.wimdeblauwe.biob.storage.inmemory;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-import org.wimdeblauwe.biob.BinaryObject;
-import org.wimdeblauwe.biob.BinaryObjectMetadata;
+import io.github.wimdeblauwe.biob.BinaryObject;
+import io.github.wimdeblauwe.biob.BinaryObjectMetadata;
 
 import java.io.ByteArrayInputStream;
-import java.nio.file.Path;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LocalFileSystemBinaryObjectStorageTest {
+class InMemoryBinaryObjectStorageTest {
 
-    @TempDir
-    Path basePath;
-    private LocalFileSystemBinaryObjectStorage storage;
+    private InMemoryBinaryObjectStorage storage;
 
     @BeforeEach
     void setUp() {
-        storage = new LocalFileSystemBinaryObjectStorage(basePath);
+        storage = new InMemoryBinaryObjectStorage();
     }
 
     @Test
@@ -36,7 +32,6 @@ class LocalFileSystemBinaryObjectStorageTest {
                                         assertThat(binaryObject.getMetadata())
                                                 .isEqualTo(createExampleMetadata());
                                     });
-        assertThat(basePath.resolve("images/1")).exists();
     }
 
     @Test
@@ -56,7 +51,6 @@ class LocalFileSystemBinaryObjectStorageTest {
                                         assertThat(binaryObjectMetadata)
                                                 .isEqualTo(createExampleMetadata());
                                     });
-        assertThat(basePath.resolve("images/1")).exists();
     }
 
     @Test
@@ -78,17 +72,8 @@ class LocalFileSystemBinaryObjectStorageTest {
         assertThat(storage.hasBinaryObject("unknown/path/1")).isFalse();
     }
 
-    @Test
-    void testDelete() {
-        BinaryObjectMetadata metadata = createExampleMetadata();
-        storage.store("images/1", metadata, new ByteArrayInputStream(new byte[]{1, 2, 3}));
-
-        storage.delete("images/1");
-
-        assertThat(basePath.resolve("images/1")).doesNotExist();
-    }
-
     private BinaryObjectMetadata createExampleMetadata() {
         return new BinaryObjectMetadata(3, "test.jpg", "image/jpg");
     }
+
 }
