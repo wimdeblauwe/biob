@@ -4,7 +4,7 @@
 
     <groupId>io.github.wimdeblauwe</groupId>
     <artifactId>biob</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>BIOB - Binary Object Storage</name>
     <description>Java library to store binary objects</description>
     <url>https://github.com/wimdeblauwe/biob</url>
@@ -44,7 +44,7 @@
         <developerConnection>scm:git:git@github.com:wimdeblauwe/biob.git</developerConnection>
         <connection>scm:git:git@github.com:wimdeblauwe/biob.git</connection>
         <url>git@github.com:wimdeblauwe/biob.git</url>
-      <tag>biob-0.0.1</tag>
+      <tag>HEAD</tag>
   </scm>
     <issueManagement>
         <system>github</system>
