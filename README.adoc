@@ -2,6 +2,7 @@
 
 image:https://travis-ci.org/wimdeblauwe/biob.svg?branch=master["Build Status", link="https://travis-ci.org/wimdeblauwe/biob"]
 image:https://sonarcloud.io/api/project_badges/measure?project=org.wimdeblauwe%3Abiob&metric=coverage["Coverage", link="https://sonarcloud.io/dashboard?id=org.wimdeblauwe%3Abiob"]
+image:https://maven-badges.herokuapp.com/maven-central/io.github.wimdeblauwe/biob/badge.svg["Maven Central", link="https://search.maven.org/search?q=a:biob"]
 
 == Goal
 
@@ -15,6 +16,30 @@ For example:
 
 == Example Usage
 
+=== Add dependency
+
+==== Maven
+
+Use this dependency if you use Maven:
+
+[source,xml]
+----
+<dependency>
+  <groupId>io.github.wimdeblauwe</groupId>
+  <artifactId>biob</artifactId>
+  <version>${biob.version}</version>
+</dependency>
+----
+
+==== Gradle
+
+For Gradle, use the following dependency:
+
+[source, groovy]
+----
+implementation 'io.github.wimdeblauwe:biob:${biob.version}'
+----
+
 === Basic setup
 
 The library is not tied to Spring Boot, but I will use some
@@ -22,7 +47,7 @@ concepts of Spring Boot to explain it usage.
 
 Suppose you have the following `User` entity:
 
-[source]
+[source,java]
 ----
 @Entity
 public class User {
@@ -74,7 +99,7 @@ implementation of which our library has various implementations available.
 The type of the reference in the entity can be any primitive or class you want. For
 this example, we will go for a simple `UUID`:
 
-[source]
+[source,java]
 ----
 @Entity
 public class User {
@@ -195,4 +220,7 @@ and
 
 `mvn release:perform`
 
-
+[NOTE]
+====
+Before releasing, run `export GPG_TTY=$(tty)`
+====
